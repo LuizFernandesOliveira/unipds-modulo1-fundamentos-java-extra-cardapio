@@ -1,4 +1,6 @@
-package mx.florinda.cardapio;
+package mx.florinda.cardapio.clients;
+
+import mx.florinda.cardapio.ItemCardapio;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
@@ -14,7 +16,8 @@ public class ClienteItensCardapioSerializado {
 
     URI uri = URI.create("http://localhost:8000/itens-cardapio");
 
-    try(HttpClient httpClient = HttpClient.newHttpClient()) {
+    try {
+      HttpClient httpClient = HttpClient.newHttpClient();
       HttpRequest httpRequest = HttpRequest.newBuilder(uri)
         .header("Accept", "application/x-java-serialized-object")
         .build();
@@ -29,6 +32,10 @@ public class ClienteItensCardapioSerializado {
       ObjectInputStream ois = new ObjectInputStream(bis);
       List<ItemCardapio> itens = (List<ItemCardapio>) ois.readObject();
       itens.forEach(System.out::println);
+    } catch (Exception e) {
+
+    } finally {
+
     }
 
   }
